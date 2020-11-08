@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using GeneratieServiceAPI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace GeneratieServiceAPI.Controllers
 
         public LoonbriefController()
         {}
-        
+
         [HttpGet]
         [Produces("application/xml")]
         public IActionResult Get()
@@ -25,9 +26,26 @@ namespace GeneratieServiceAPI.Controllers
 
         [HttpPost]
         [Consumes("application/xml")]
+        #if (DEBUG)
+        [Produces("application/json", "text/html")]
+        #else
+        [Produces("application/xml", "text/html")]
+        #endif
         public IActionResult Post([FromBody]DtoModel request)
         {
-            return Ok();
+            var loonbrief = new Loonbrief()
+            {
+                // Initialize object with parameters
+            };
+
+            // HTML result
+            if (string.Equals(request.Payload.GenerateDocument.OutputType, "html", StringComparison.OrdinalIgnoreCase))
+            {
+                return Ok(loonbrief.GenerateHTML());
+            }
+
+            // Content-Type specified result
+            return Ok(loonbrief);
         }
     }
 }

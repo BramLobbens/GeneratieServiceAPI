@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace GeneratieServiceAPI.Models
 {
+    /// <author>Bram Lobbens</author>
+    ///
     [XmlRoot(ElementName = "Envelope")]
     public class DtoModel
     {
@@ -31,8 +34,11 @@ namespace GeneratieServiceAPI.Models
     {
         [XmlElement(DataType = "string", ElementName = "OutputType")]
         public string OutputType { get; set; }
+        // [XmlElement(ElementName = "Parameters", Type = typeof(ParameterDto))]
+        // public ParameterDto[] Parameters { get; set; }
         [XmlArray("Parameters"), XmlArrayItem("Parameter")]
         public ParameterDto[] Parameters { get; set; }
+        // To fix: does not receive parameter values
     }
 
     public class ParameterDto
