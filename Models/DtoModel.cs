@@ -20,18 +20,24 @@ namespace GeneratieServiceAPI.Models
         [XmlElement(DataType = "string", ElementName = "Name")]
         public string Name { get; set; }
     }
-    
+
     public class PayloadDto
+    {
+        [XmlElement(ElementName = "GenerateDocument")]
+        public GenerateDocumentDto  GenerateDocument { get; set; }
+    }
+
+    public class GenerateDocumentDto
     {
         [XmlElement(DataType = "string", ElementName = "OutputType")]
         public string OutputType { get; set; }
-        [XmlElement(ElementName = "Parameters")]
-        public ParameterDto Parameters { get; set; }
+        [XmlArray("Parameters"), XmlArrayItem("Parameter")]
+        public ParameterDto[] Parameters { get; set; }
     }
 
     public class ParameterDto
     {
         [XmlElement(DataType = "string", ElementName = "Parameter")]
-        public IEnumerable<string> Paramer { get; set; }
+        public string Parameter { get; set; }
     }
 }

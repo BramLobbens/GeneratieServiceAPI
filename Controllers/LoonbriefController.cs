@@ -25,9 +25,9 @@ namespace GeneratieServiceAPI.Controllers
 
         [HttpPost]
         [Consumes("application/xml")]
-        public IActionResult Post([FromBody]DtoModelTest request)
+        public IActionResult Post([FromBody]DtoModel request)
         {
-            return Ok($"Sender: {request.Sender} Payload: {request.Payload}\n");
+            return Ok();
         }
     }
 }
