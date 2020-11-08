@@ -24,10 +24,10 @@ namespace GeneratieServiceAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]DtoModel request)
+        [Consumes("application/xml")]
+        public IActionResult Post([FromBody]DtoModelTest request)
         {
-            
-            return Ok();
+            return Ok($"Sender: {request.Sender} Payload: {request.Payload}\n");
         }
     }
 }
