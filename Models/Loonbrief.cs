@@ -10,7 +10,7 @@ namespace GeneratieServiceAPI.Models
         public Loonbrief()
         { }
 
-		public Guid Id { get; set ; }
+        public Guid Id { get; set ; }
         //elke parameter toevoegen dat moet verwerkt worden. 
         public string Name { get; set; }
         public string LastName { get; set; }
