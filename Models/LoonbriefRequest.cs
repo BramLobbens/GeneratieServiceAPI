@@ -1,21 +1,27 @@
 using System;
+using System.Xml.Serialization;
 
 namespace GeneratieServiceAPI.Models
 {
     public class LoonbriefRequest
     {
-        public LoonbriefRequest()
-        { }
-
-        //elke parameter toevoegen dat moet verwerkt worden. 
+        [XmlElement("Name")]
         public string Name { get; set; }
+        [XmlElement("LastName")]
         public string LastName { get; set; }
+        [XmlElement("RegisterKey")]
         public string Registerkey { get; set; }
+        [XmlElement("Street")]
         public string Street { get; set; }
+        [XmlElement("Number")]
         public int Number { get; set; }
+        [XmlElement("PostalCode")]
         public int PostalCode { get; set; }
+        [XmlElement("City")]
         public string City { get; set; }
-        public string Status { get; set; } //Burgerlijke staat
-        public string Dependents { get; set; } //Personen ten laste
+        [XmlElement("Status")]
+        public string Status { get; set; }
+        [XmlElement("Dependents")]
+        public string Dependents { get; set; }
     }
 }

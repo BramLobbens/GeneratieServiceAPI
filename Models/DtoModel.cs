@@ -32,14 +32,7 @@ namespace GeneratieServiceAPI.Models
     {
         [XmlElement(DataType = "string", ElementName = "OutputType")]
         public string OutputType { get; set; }
-        [XmlArray(ElementName = "Parameters", IsNullable = true)]
-        [XmlArrayItem(ElementName = "Parameter", IsNullable = true)]
-        public Parameter[] Parameters { get; set; }
-    }
-
-    public class Parameter
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
+        [XmlElement("Parameters", IsNullable = true)]
+        public LoonbriefRequest Parameters { get; set; }
     }
 }

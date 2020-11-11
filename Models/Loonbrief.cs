@@ -11,12 +11,9 @@ namespace GeneratieServiceAPI.Models
         public Loonbrief()
         { }
 
-        //[XmlIgnore]
         public Guid Id { get; set ; }
         //elke parameter toevoegen dat moet verwerkt worden. 
-        [XmlElement("Name")]
         public string Name { get; set; }
-        [XmlElement("LastName")]
         public string LastName { get; set; }
         public string Registerkey { get; set; }
         public string Street { get; set; }
