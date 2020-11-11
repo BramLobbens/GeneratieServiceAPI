@@ -34,6 +34,12 @@ namespace GeneratieServiceAPI.Models
         public string OutputType { get; set; }
         [XmlArray(ElementName = "Parameters", IsNullable = true)]
         [XmlArrayItem(ElementName = "Parameter", IsNullable = true)]
-        public string[] Parameters { get; set; }
+        public Parameter[] Parameters { get; set; }
+    }
+
+    public class Parameter
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }
