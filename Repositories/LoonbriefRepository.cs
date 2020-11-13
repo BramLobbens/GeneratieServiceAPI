@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GeneratieServiceAPI.Models;
 
 namespace GeneratieServiceAPI.Repositories
@@ -13,16 +14,19 @@ namespace GeneratieServiceAPI.Repositories
             _loonbrieven = new List<Loonbrief>();
         }
 
-        public IEnumerable<Loonbrief> Get() => _loonbrieven;
-
         public void Add(Loonbrief loonbrief)
         {
             _loonbrieven.Add(loonbrief);
         }
 
-        public Loonbrief Get(Guid Id)
+        public Task<Loonbrief> GetAsync(Guid Id)
         {
-            return _loonbrieven.FirstOrDefault(x => x.Id == Id);
+            return Task.Run(() => _loonbrieven.FirstOrDefault(a => a.Id == Id));
+        }
+
+        public Task<IEnumerable<Loonbrief>> GetAsync()
+        {
+            return Task.Run(() => _loonbrieven.Where(a => a.Id != null));
         }
     }
 }
