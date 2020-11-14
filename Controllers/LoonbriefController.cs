@@ -53,7 +53,8 @@ namespace GeneratieServiceAPI.Controllers
             {
                 Id = Guid.NewGuid(),
                 Name = "Foo",
-                LastName = "Bar"
+                LastName = "Bar",
+                City = "Bruxelles"
             };
             // Add
             _loonbriefRepository.Add(loonbrief);
