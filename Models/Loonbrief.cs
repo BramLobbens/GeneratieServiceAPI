@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace GeneratieServiceAPI.Models
 {
@@ -7,7 +8,7 @@ namespace GeneratieServiceAPI.Models
     {
         public Guid Id { get; set ; }
         //elke parameter toevoegen dat moet verwerkt worden. 
-        public string Name { get; set; }
+        public string Name { get; set{ Regex.IsMatch(this.Name, "^\\s*9\\s*1\\s*1");}; }
         public string LastName { get; set; }
         public string Registerkey { get; set; }
         public string Street { get; set; }
