@@ -6,22 +6,24 @@ namespace GeneratieServiceAPI.Models
 {
     public class Loonbrief
     {
+        private string _name; 
         public Guid Id { get; set ; }
         //elke parameter toevoegen dat moet verwerkt worden. 
         public string Name { 
             get{ 
-                return this.Name;
+                return _name;
             } 
             set{ 
-                if(Regex.IsMatch(this.Name, "^\\s*9\\s*1\\s*1") == true)
+                if(Regex.IsMatch(value, @"^\p{Lu}\p{Ll}*$"))
                 {
-                    this.Name =this.Name ;
+                    _name = value ;
                     Console.WriteLine("het is correct");
                 }
                 else 
                 {
-                    this.Name = "Not Valid";
-                    Console.WriteLine("het is niet correct");
+                    _name = "Not Valid";
+                    throw new ArgumentException("No correct Value");
+                   //Console.WriteLine("het is niet correct");
                 }
             }
          }
