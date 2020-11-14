@@ -32,37 +32,48 @@ namespace GeneratieServiceAPI.Controllers
             return Ok(await _loonbriefRepository.GetAsync(id));
         }
 
+        [HttpGet("{id:guid}")]
+        [Produces("application/xml")]
+        public IActionResult GetById(Guid id)
+        {
+            return Ok(_loonbriefRepository.GetAsync(id));
+        }
+
         [HttpPost]
         [Consumes("application/xml")]
 #if (DEBUG)
-        //[Produces("application/xml")]
+        //[Produces("application/xml", "application/json")]
 #else
         [Produces("application/xml")]
 #endif
         public async Task<IActionResult> Post(DtoModel request)
         {
-            // Test
+            // Create loonbrief
             var loonbrief = new Loonbrief()
             {
                 Id = Guid.NewGuid(),
                 Name = "Foo",
                 LastName = "Bar"
             };
+            // Add
             _loonbriefRepository.Add(loonbrief);
 
-            var xmlstring = await Task.Run(() => XmlExtensions.Serialize(loonbrief));
-
-            // HTML result
+            // Return HTML string
             if (string.Equals(request.Payload.GenerateDocument.OutputType, "html", StringComparison.OrdinalIgnoreCase))
             {
                 //return CreatedAtAction(nameof(GetByIdAsync), new { id = loonbrief.Id }, loonbrief.GenerateHTML());
-                return Ok(HtmlExtensions.GenerateHTML(loonbrief));
+                var htmlstring = await Task.Run(() => HtmlExtensions.GenerateHTML(loonbrief));
+                return CreatedAtAction(nameof(GetById), new { id = loonbrief.Id }, htmlstring);
+                //return Ok(htmlstring);
             }
-
+            // Return XML string
+            else if (string.Equals(request.Payload.GenerateDocument.OutputType, "xml", StringComparison.OrdinalIgnoreCase))
+            {
+                var xmlstring = await Task.Run(() => XmlExtensions.Serialize(loonbrief));
+                return CreatedAtAction(nameof(GetById), new { id = loonbrief.Id }, xmlstring);
+            }
             // Content-Type specified result
-            //return CreatedAtAction(nameof(GetById), new { id = loonbrief.Id }, loonbrief);
-            return Ok(xmlstring);
-            //return Ok(loonbrief);
+            return CreatedAtAction(nameof(GetById), new { id = loonbrief.Id }, loonbrief);
         }
     }
 }

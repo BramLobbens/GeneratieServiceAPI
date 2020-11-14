@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +14,14 @@ namespace GeneratieServiceAPI.Extensions
             var html = "";
             foreach (PropertyInfo prop in obj.GetType().GetProperties())
             {
-                // mental note: if prop is of certain type allocate different html tag
+                // expand on different html tags used
                 html += $"<div>{prop.GetValue(obj, null)}</div>";
             }
 
             return new ContentResult
             {
                 ContentType = "text/html",
+                StatusCode = 201,
                 Content = html
             };
         }
