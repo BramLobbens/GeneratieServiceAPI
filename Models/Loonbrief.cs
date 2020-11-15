@@ -148,7 +148,7 @@ namespace GeneratieServiceAPI.Models
             set
             {
                 //kijken of het enkel bestaat uit tekst en of het een van de geldige value zijn. 
-                if (Regex.IsMatch(value, @"^\p{Lu}\p{Ll}*$") && (value === "Ongehuwd" || value === "Gehuwd" ||value === "Gescheiden" ||value === "Verweduwd"))
+                if (Regex.IsMatch(value, @"^\p{Lu}\p{Ll}*$") && (value == "Ongehuwd" || value == "Gehuwd" || value == "Gescheiden" || value == "Verweduwd"))
                 {
                     _status = value;
                 }
