@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 namespace GeneratieServiceAPI.Models
 {
@@ -11,7 +12,8 @@ namespace GeneratieServiceAPI.Models
         private string _name;
         private string _lastName;
         private string _city;
-        private int _postalCode;
+        private string _postalCode;
+        [XmlAttribute("Id")]
         public Guid Id { get; set; }
         //elke parameter toevoegen dat moet verwerkt worden. 
         public string Name
@@ -25,7 +27,7 @@ namespace GeneratieServiceAPI.Models
                 }
                 else
                 {
-                    throw new ArgumentException("No correct Value");
+                    throw new ArgumentException("No correct value.");
                 }
             }
         }
@@ -40,14 +42,14 @@ namespace GeneratieServiceAPI.Models
                 }
                 else
                 {
-                    throw new ArgumentException("No correct Value");
+                    throw new ArgumentException("No correct value.");
                 }
             }
         }
         public string Registerkey { get; set; }
         public string Street { get; set; }
-        public int Number { get; set; }
-        public int PostalCode
+        public string Number { get; set; }
+        public string PostalCode
         {
             get { return _postalCode; }
             set
@@ -59,13 +61,19 @@ namespace GeneratieServiceAPI.Models
                     {
                         foreach (JsonElement el in document.RootElement.EnumerateArray())
                         {
-                            if (el.TryGetProperty("city", out JsonElement result))
+                            if (el.TryGetProperty("zip", out JsonElement result))
                             {
-                                if (Int32.Parse(result.ToString()) == value)
+                                if (result.ToString() == value)
                                 {
                                     _postalCode = value;
+                                    break;
+                                }
+                                else
+                                {
+                                    throw new ArgumentException("Postal code not valid.");
                                 }
                             }
+
                         }
                     }
                 }
@@ -88,14 +96,20 @@ namespace GeneratieServiceAPI.Models
                                 if (result.ToString() == value)
                                 {
                                     _city = value;
+                                    break;
+                                }
+                                else
+                                {
+                                    throw new ArgumentException("City name not valid.");
                                 }
                             }
+
                         }
                     }
                 }
             }
         }
         public string Status { get; set; } //Burgerlijke staat
-        public List<string> Dependents { get; set; } //Personen ten laste
+        public string Dependents { get; set; } //Personen ten laste
     }
 }
