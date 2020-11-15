@@ -18,7 +18,7 @@ namespace GeneratieServiceAPI.Models
         private string _registerkey;
         //private int _postalCode;
         private string _status; 
-        private string _dependents;
+       // private string _dependents;
 
         [XmlAttribute("Id")]
         public Guid Id { get; set; }
@@ -34,7 +34,7 @@ namespace GeneratieServiceAPI.Models
                 }
                 else
                 {
-                    throw new ArgumentException("No correct value.");
+                    throw new ArgumentException("Name is not a correct value.");
                 }
             }
         }
@@ -49,20 +49,20 @@ namespace GeneratieServiceAPI.Models
                 }
                 else
                 {
-                    throw new ArgumentException("No correct value.");
+                    throw new ArgumentException("Lastname is not a correct value.");
                 }
             }
         }
         public string Registerkey {  get { return _registerkey; }
             set
             {
-                if (Regex.IsMatch(value, "\d{2}[.]\d{2}[.]\d{2}[-]\d{3}[.]\d{2}"))
+                if (Regex.IsMatch(value, @"\d{2}[.]\d{2}[.]\d{2}[-]\d{3}[.]\d{2}"))
                 {
                     _registerkey = value;
                 }
                 else
                 {
-                    throw new ArgumentException("No correct value.");
+                    throw new ArgumentException("Registerkey is not a correct value.");
                 }
             } }//00.00.00 - 000.00 dit is de vorm dit het zou moeten hebben  lengte is 14 karakter waarvan 2,5,12 een Punt en 8 - 
         public string Street { get { return _street; }
@@ -74,7 +74,7 @@ namespace GeneratieServiceAPI.Models
                 }
                 else
                 {
-                    throw new ArgumentException("No correct Value");
+                    throw new ArgumentException("Street is not a correct Value");
                 }
             } 
         }
@@ -89,7 +89,7 @@ namespace GeneratieServiceAPI.Models
                 }
                 else
                 {
-                    throw new ArgumentException("No correct Value");
+                    throw new ArgumentException("Number is not a correct Value");
                 }
             }
         }
@@ -115,7 +115,7 @@ namespace GeneratieServiceAPI.Models
                                 }
                                 else
                                 {
-                                    throw new ArgumentException("Postal code not valid.");
+                                    throw new ArgumentException("Postal code is not a correct Value.");
                                 }
                             }
 
@@ -145,7 +145,7 @@ namespace GeneratieServiceAPI.Models
                                 }
                                 else
                                 {
-                                    throw new ArgumentException("City name not valid.");
+                                    throw new ArgumentException("City name is not a correct Value.");
                                 }
                             }
 
@@ -158,13 +158,13 @@ namespace GeneratieServiceAPI.Models
             set
             {
                 //kijken of het enkel bestaat uit tekst en of het een van de geldige value zijn. 
-                if (Regex.IsMatch(value, @"^\p{Lu}\p{Ll}*$") && (value === "Ongehuwd" || value === "Gehuwd" ||value === "Gescheiden" ||value === "Verweduwd"))
+                if (Regex.IsMatch(value, @"^\p{Lu}\p{Ll}*$") && (value == "Ongehuwd" || value == "Gehuwd" ||value == "Gescheiden" ||value == "Verweduwd"))
                 {
                     _status = value;
                 }
                 else
                 {
-                    throw new ArgumentException("No correct Value");
+                    throw new ArgumentException("Status is not a correct Value.");
                 }
             } } //Burgerlijke staat : Ongehuwd,Gehuwd,Gescheiden,Verweduwd
         
