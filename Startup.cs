@@ -50,6 +50,9 @@ namespace GeneratieServiceAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "htmlroute",
+                    pattern: "{controller=Loonbrief}/{action=GetByIdHtml}/html/{id?}");
             });
         }
     }

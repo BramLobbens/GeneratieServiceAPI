@@ -20,61 +20,76 @@ namespace GeneratieServiceAPI.Controllers
 
         [HttpGet]
         [Produces("application/xml")]
-        public async Task<IActionResult> GetAsync()
+        public IActionResult Get()
         {
-            return Ok(await _loonbriefRepository.GetAsync());
-        }
-
-        [HttpGet("{id:guid}")]
-        [Produces("application/xml")]
-        public async Task<IActionResult> GetByIdAsync(Guid id)
-        {
-            return Ok(await _loonbriefRepository.GetAsync(id));
+            return Ok(_loonbriefRepository.Get());
         }
 
         [HttpGet("{id:guid}")]
         [Produces("application/xml")]
         public IActionResult GetById(Guid id)
         {
-            return Ok(_loonbriefRepository.GetAsync(id));
+            return Ok(_loonbriefRepository.Get(id));
+        }
+
+        [HttpGet("html/{id:guid}")]
+        public ContentResult GetByIdHtml(Guid id)
+        {
+            return HtmlExtensions.GenerateHTML(_loonbriefRepository.Get(id));
         }
 
         [HttpPost]
         [Consumes("application/xml")]
-#if (DEBUG)
-        //[Produces("application/xml", "application/json")]
-#else
-        [Produces("application/xml")]
-#endif
         public async Task<IActionResult> Post(DtoModel request)
         {
-            // Create loonbrief
-            var loonbrief = new Loonbrief()
+            try
             {
-                Id = Guid.NewGuid(),
-                Name = "Foo",
-                LastName = "Bar",
-                City = "Bruxelles"
-            };
-            // Add
-            _loonbriefRepository.Add(loonbrief);
+                // Create loonbrief object
+                var loonbrief = new Loonbrief()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = request.Payload.GenerateDocument.Parameters.Name,
+                    LastName = request.Payload.GenerateDocument.Parameters.LastName,
+                    Registerkey = request.Payload.GenerateDocument.Parameters.Registerkey,
+                    Street = request.Payload.GenerateDocument.Parameters.Street,
+                    Number = request.Payload.GenerateDocument.Parameters.Number,
+                    PostalCode = request.Payload.GenerateDocument.Parameters.PostalCode,
+                    City = request.Payload.GenerateDocument.Parameters.City,
+                    Status = request.Payload.GenerateDocument.Parameters.Status,
+                    Dependents = request.Payload.GenerateDocument.Parameters.Dependents
+                };
+                // Add
+                _loonbriefRepository.Add(loonbrief);
 
-            // Return HTML string
-            if (string.Equals(request.Payload.GenerateDocument.OutputType, "html", StringComparison.OrdinalIgnoreCase))
-            {
-                //return CreatedAtAction(nameof(GetByIdAsync), new { id = loonbrief.Id }, loonbrief.GenerateHTML());
-                var htmlstring = await Task.Run(() => HtmlExtensions.GenerateHTML(loonbrief));
-                return CreatedAtAction(nameof(GetById), new { id = loonbrief.Id }, htmlstring);
-                //return Ok(htmlstring);
+                // Return HTML string
+                if (string.Equals(request.Payload.GenerateDocument.OutputType, "html", StringComparison.OrdinalIgnoreCase))
+                {
+                    ContentResult html = await Task.Run(() => HtmlExtensions.GenerateHTML(loonbrief))
+                    .ConfigureAwait(false);
+
+                    return CreatedAtAction(nameof(GetById), new { id = loonbrief.Id }, html);
+                }
+
+                // Return XML string
+                else if (string.Equals(request.Payload.GenerateDocument.OutputType, "xml", StringComparison.OrdinalIgnoreCase))
+                {
+                    ContentResult xml = await Task.Run(() => XmlExtensions.Serialize(loonbrief))
+                    .ConfigureAwait(false);
+
+                    return CreatedAtAction(nameof(GetById), new { id = loonbrief.Id }, xml);
+                }
+
+                // Content-Type specified result
+                return CreatedAtAction(nameof(GetById), new { id = loonbrief.Id }, loonbrief);
             }
-            // Return XML string
-            else if (string.Equals(request.Payload.GenerateDocument.OutputType, "xml", StringComparison.OrdinalIgnoreCase))
+            catch (ArgumentException ex)
             {
-                var xmlstring = await Task.Run(() => XmlExtensions.Serialize(loonbrief));
-                return CreatedAtAction(nameof(GetById), new { id = loonbrief.Id }, xmlstring);
+                return BadRequest(new { message = ex.Message });
             }
-            // Content-Type specified result
-            return CreatedAtAction(nameof(GetById), new { id = loonbrief.Id }, loonbrief);
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

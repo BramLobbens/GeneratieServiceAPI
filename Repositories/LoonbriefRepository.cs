@@ -19,14 +19,11 @@ namespace GeneratieServiceAPI.Repositories
             _loonbrieven.Add(loonbrief);
         }
 
-        public Task<Loonbrief> GetAsync(Guid Id)
+        public Loonbrief Get(Guid Id)
         {
-            return Task.Run(() => _loonbrieven.FirstOrDefault(a => a.Id == Id));
+            return _loonbrieven.FirstOrDefault(a => a.Id == Id);
         }
 
-        public Task<IEnumerable<Loonbrief>> GetAsync()
-        {
-            return Task.Run(() => _loonbrieven.Where(a => a.Id != null));
-        }
+        public IEnumerable<Loonbrief> Get() => _loonbrieven;
     }
 }

@@ -7,8 +7,8 @@ namespace GeneratieServiceAPI.Repositories
 {
     public interface ILoonbriefRepository
     {
-        Task<IEnumerable<Loonbrief>> GetAsync();
-        Task<Loonbrief> GetAsync(Guid Id);
+        IEnumerable<Loonbrief> Get();
+        Loonbrief Get(Guid Id);
         void Add(Loonbrief loonbrief);
     }
 }

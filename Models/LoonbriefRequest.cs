@@ -14,9 +14,9 @@ namespace GeneratieServiceAPI.Models
         [XmlElement("Street")]
         public string Street { get; set; }
         [XmlElement("Number")]
-        public int Number { get; set; }
+        public string Number { get; set; }
         [XmlElement("PostalCode")]
-        public int PostalCode { get; set; }
+        public string PostalCode { get; set; }
         [XmlElement("City")]
         public string City { get; set; }
         [XmlElement("Status")]

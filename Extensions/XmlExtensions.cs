@@ -1,31 +1,25 @@
 using System;
 using System.IO;
 using System.Xml.Serialization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GeneratieServiceAPI.Extensions
 {
     public static class XmlExtensions
     {
-        public static string Serialize<T>(T dataToSerialize)
+        public static ContentResult Serialize<T>(this T dataToSerialize)
         {
             if (dataToSerialize == null) return null;
-            using (var writer = new StringWriter())
-            {
-                var serializer = new XmlSerializer(dataToSerialize.GetType());
-                serializer.Serialize(writer, dataToSerialize);
-                return writer.ToString();
-            }
-        }
+            using var writer = new StringWriter();
+            var serializer = new XmlSerializer(dataToSerialize.GetType());
+            serializer.Serialize(writer, dataToSerialize);
 
-        public static T Deserialize<T>(string xmlText)
-        {
-            if (String.IsNullOrWhiteSpace(xmlText)) return default(T);
-
-            using (var reader = new StringReader(xmlText))
+            return new ContentResult
             {
-                var serializer = new XmlSerializer(xmlText.GetType());
-                return (T)serializer.Deserialize(reader);
-            }
+                ContentType = "application/xml",
+                StatusCode = 201,
+                Content = writer.ToString()
+            };
         }
     }
 }
