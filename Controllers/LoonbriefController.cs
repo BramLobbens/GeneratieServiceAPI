@@ -18,6 +18,7 @@ namespace GeneratieServiceAPI.Controllers
             _loonbriefRepository = loonbriefRepository;
         }
 
+        // GET api/loonbrief
         [HttpGet]
         [Produces("application/xml")]
         public IActionResult Get()
@@ -25,6 +26,7 @@ namespace GeneratieServiceAPI.Controllers
             return Ok(_loonbriefRepository.Get());
         }
 
+        // GET api/loonbrief/{id}
         [HttpGet("{id:guid}")]
         [Produces("application/xml")]
         public IActionResult GetById(Guid id)
@@ -32,12 +34,14 @@ namespace GeneratieServiceAPI.Controllers
             return Ok(_loonbriefRepository.Get(id));
         }
 
+        // GET api/loonbrief/html/{id}
         [HttpGet("html/{id:guid}")]
         public ContentResult GetByIdHtml(Guid id)
         {
             return HtmlExtensions.GenerateHTML(_loonbriefRepository.Get(id));
         }
 
+        // POST api/loonbrief
         [HttpPost]
         [Consumes("application/xml")]
         public async Task<IActionResult> Post(DtoModel request)
@@ -48,6 +52,8 @@ namespace GeneratieServiceAPI.Controllers
                 var loonbrief = new Loonbrief()
                 {
                     Id = Guid.NewGuid(),
+                    DateRegister = DateTime.Now,
+
                     Name = request.Payload.GenerateDocument.Parameters.Name,
                     LastName = request.Payload.GenerateDocument.Parameters.LastName,
                     Registerkey = request.Payload.GenerateDocument.Parameters.Registerkey,
