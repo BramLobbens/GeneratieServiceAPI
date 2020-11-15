@@ -56,7 +56,7 @@ namespace GeneratieServiceAPI.Models
         public string Registerkey {  get { return _registerkey; }
             set
             {
-                if (Regex.IsMatch(value, "\d{2}[.]\d{2}[.]\d{2}[-]\d{3}[.]\d{2}"))
+                if (Regex.IsMatch(value, @"\d{2}[.]\d{2}[.]\d{2}[-]\d{3}[.]\d{2}"))
                 {
                     _registerkey = value;
                 }
@@ -167,24 +167,7 @@ namespace GeneratieServiceAPI.Models
                     throw new ArgumentException("No correct Value");
                 }
             } } //Burgerlijke staat : Ongehuwd,Gehuwd,Gescheiden,Verweduwd
-        
-        //public List<string> Dependents { get { return _dependents; }
-        //    set
-        //    {
-        //        //kijken of het enkel bestaat uit tekst en of het een van de geldige value zijn. 
-        //        //enkel nog kijken of het wel van alle waardes in de arry gecontroleerd wordt of het enkel uit letters bestaat. 
-        //        if (Regex.IsMatch(value, @"^\p{Lu}\p{Ll}*$"))
-        //        {
-        //            _dependents = value;
-        //        }
-        //        else
-        //        {
-        //            throw new ArgumentException("No correct Value");
-        //        }
-        //    } } //Personen ten laste
-        //    }
-        //}
-       
+
         public string Dependents { get; set; } //Personen ten laste
         public DateTime DateRegister {get; set;} //datum laten genereren wanneer de loonbrief binnen komt. 
     }
