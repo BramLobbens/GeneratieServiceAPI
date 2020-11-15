@@ -15,6 +15,7 @@ namespace GeneratieServiceAPI.Models
         private string _number;
         private string _city;
         private string _postalCode;
+        private string _registerkey;
         //private int _postalCode;
         private string _status; 
         private string _dependents;
@@ -52,9 +53,18 @@ namespace GeneratieServiceAPI.Models
                 }
             }
         }
-        public string Registerkey { get; set; }//00.00.00 - 000.00 dit is de vorm dit het zou moeten hebben  lengte is 14 karakter waarvan 2,5,12 een Punt en 8 - 
-
-
+        public string Registerkey {  get { return _registerkey; }
+            set
+            {
+                if (Regex.IsMatch(value, "\d{2}[.]\d{2}[.]\d{2}[-]\d{3}[.]\d{2}"))
+                {
+                    _registerkey = value;
+                }
+                else
+                {
+                    throw new ArgumentException("No correct value.");
+                }
+            } }//00.00.00 - 000.00 dit is de vorm dit het zou moeten hebben  lengte is 14 karakter waarvan 2,5,12 een Punt en 8 - 
         public string Street { get { return _street; }
             set
             {
@@ -176,5 +186,6 @@ namespace GeneratieServiceAPI.Models
         //}
        
         public string Dependents { get; set; } //Personen ten laste
+        public DateTime DateRegister {get; set;} //datum laten genereren wanneer de loonbrief binnen komt. 
     }
 }
