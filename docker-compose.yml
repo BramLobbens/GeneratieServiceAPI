@@ -2,6 +2,6 @@ version: "3.8"
 services:
   web:
     build: .
-    image: generatieservice-container:v1.0
+    image: generatieservice-container:v1.1
     ports:
       - "80:80"
