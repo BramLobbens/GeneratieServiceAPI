@@ -107,7 +107,7 @@ namespace GeneratieServiceAPI.Models
             set
             {
                 // Must be a valid Belgian postal code (see: zip-code-belgium)
-                using StreamReader r = new StreamReader(@"Data\zipcode-belgium.json");
+                using StreamReader r = new StreamReader("Data/zipcode-belgium.json");
                 using JsonDocument document = JsonDocument.Parse(r.ReadToEnd());
                 foreach (JsonElement el in document.RootElement.EnumerateArray())
                 {
@@ -132,7 +132,7 @@ namespace GeneratieServiceAPI.Models
             set
             {
                 // Must be a valid Belgian city (see: zip-code-belgium)
-                using StreamReader r = new StreamReader(@"Data\zipcode-belgium.json");
+                using StreamReader r = new StreamReader("Data/zipcode-belgium.json");
                 using JsonDocument document = JsonDocument.Parse(r.ReadToEnd());
                 foreach (JsonElement el in document.RootElement.EnumerateArray())
                 {
