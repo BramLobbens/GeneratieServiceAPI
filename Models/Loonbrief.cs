@@ -26,7 +26,7 @@ namespace GeneratieServiceAPI.Models
             set
             {
                 // Must consist of unicode characters starting with an uppercase letter
-             n   if (Regex.IsMatch(value, @"^\p{Lu}\p{Ll}*$"))
+                if (Regex.IsMatch(value, @"^\p{Lu}\p{Ll}*$"))
                 {
                     _name = value;
                 }
