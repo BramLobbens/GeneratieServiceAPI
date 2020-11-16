@@ -117,7 +117,7 @@ namespace GeneratieServiceAPI.Models
                         {
                             _postalCode = value;
                             break;
-                        }  
+                        }
                     }
                 }
                 if (string.IsNullOrEmpty(_postalCode))
