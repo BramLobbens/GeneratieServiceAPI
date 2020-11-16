@@ -26,7 +26,7 @@ namespace GeneratieServiceAPI.Models
             set
             {
                 // Must consist of unicode characters starting with an uppercase letter
-                if (Regex.IsMatch(value, @"^\p{Lu}\p{Ll}*$"))
+             n   if (Regex.IsMatch(value, @"^\p{Lu}\p{Ll}*$"))
                 {
                     _name = value;
                 }
@@ -117,12 +117,12 @@ namespace GeneratieServiceAPI.Models
                         {
                             _postalCode = value;
                             break;
-                        }  
+                        }
                     }
                     else
-                        {
-                            throw new ArgumentException("Postal code is not a correct Value.");
-                        }
+                    {
+                        throw new ArgumentException("Postal code is not a correct Value.");
+                    }
                 }
             }
         }
@@ -145,9 +145,9 @@ namespace GeneratieServiceAPI.Models
                         }
                     }
                     else
-                        {
-                            throw new ArgumentException("City name is not a correct Value.");
-                        }
+                    {
+                        throw new ArgumentException("City name is not a correct Value.");
+                    }
                 }
             }
         }
