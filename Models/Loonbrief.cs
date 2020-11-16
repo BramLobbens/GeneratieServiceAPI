@@ -119,10 +119,10 @@ namespace GeneratieServiceAPI.Models
                             break;
                         }  
                     }
-                    else
-                        {
-                            throw new ArgumentException("Postal code is not a correct Value.");
-                        }
+                }
+                if (string.IsNullOrEmpty(_postalCode))
+                {
+                     throw new ArgumentException("Postal code is not a correct Value.");
                 }
             }
         }
@@ -144,10 +144,10 @@ namespace GeneratieServiceAPI.Models
                             break;
                         }
                     }
-                    else
-                        {
-                            throw new ArgumentException("City name is not a correct Value.");
-                        }
+                }
+                if (string.IsNullOrEmpty(_city))
+                {
+                    throw new ArgumentException("Postal code is not a correct Value.");
                 }
             }
         }
