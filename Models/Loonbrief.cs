@@ -117,12 +117,12 @@ namespace GeneratieServiceAPI.Models
                         {
                             _postalCode = value;
                             break;
-                        }
-                        else
+                        }  
+                    }
+                    else
                         {
                             throw new ArgumentException("Postal code is not a correct Value.");
                         }
-                    }
                 }
             }
         }
@@ -143,11 +143,11 @@ namespace GeneratieServiceAPI.Models
                             _city = value;
                             break;
                         }
-                        else
+                    }
+                    else
                         {
                             throw new ArgumentException("City name is not a correct Value.");
                         }
-                    }
                 }
             }
         }
